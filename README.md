@@ -13,7 +13,11 @@ The aim of this project is to play around with Docker-Compose, Dockerfiles (Flas
 ## WORKFLOW
 The Prometheus Instance makes requests to the Flask App */metrics* endpoint so the data then can be displayed in the Grafana container UI:
 
-**Flask APP** -- (GET http://flask-app/metrics) --> **Prometheus** --> **Grafana**
+    +-----------+    GET http://flask-app/metrics    +------------+           +---------+
+    | Flask APP | ---------------------------------> | Prometheus | --------> | Grafana |
+    +-----------+                                    +------------+           +---------+
+                                                              
+
 
 <br>
 
