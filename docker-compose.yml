@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  flask-app:
+    build: 
+      context: .
+      dockerfile: Dockerfile-Flask
+    ports:
+      - "5000:5000"
+
+  prometheus:
+    image: prom/prometheus:v2.28.1
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    depends_on:
+      - flask-app
+    restart: always
+    network_mode: host
+
+  grafana:
+    image: grafana/grafana:8.2.2
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+    restart: always
+    network_mode: host
+
